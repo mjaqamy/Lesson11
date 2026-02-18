@@ -102,7 +102,6 @@
 
 // //Promise creation 123 End p2 =>> Promise{} Promise resolving timeout
 
-
 // TASK 5
 
 // //sync1
