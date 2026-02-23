@@ -18,16 +18,30 @@ async function loadTodo(num: number): Promise<Todo | null> {
   }
   return null; // если запрос не удался
 }
+//1-й способ
+async function loadTodos(nums: number[]): Promise<(number | null)[]> {
+  const ids: (number | null)[] = [];
 
-// Функция для загрузки нескольких todo
-async function loadTodos(num: number[]): Promise<(number | null)[]> {
-  // Преобразуем массив чисел в массив промисов, вызывая loadTodo для каждого числа
-  const Promises = num.map((id) => loadTodo(id));
-  // Ждём, пока все промисы завершатся
-  const results = await Promise.all(Promises);
-  // Преобразуем массив объектов Todo (или null) в массив id (или null)
-  const ids = results.map((todo) => (todo ? todo.id : null)); // если объект есть, берём id, если объекта нет - null
-  return ids; // Возвращаем массив id
+  for (const id of nums) {
+    const todo = await loadTodo(id); // ждём результат каждого запроса
+    ids.push(todo ? todo.id : null); // если объект есть, берём id, иначе null
+  }
+  return null; // если запрос не удался
 }
+
+  return ids;
+}
+
+//2-й способ через Promise.all
+// // Функция для загрузки нескольких todo
+// async function loadTodos(num: number[]): Promise<(number | null)[]> {
+//   // Преобразуем массив чисел в массив промисов, вызывая loadTodo для каждого числа
+//   const Promises = num.map((id) => loadTodo(id));
+//   // Ждём, пока все промисы завершатся
+//   const results = await Promise.all(Promises);
+//   // Преобразуем массив объектов Todo (или null) в массив id (или null)
+//   const ids = results.map((todo) => (todo ? todo.id : null)); // если объект есть, берём id, если объекта нет - null
+//   return ids; // Возвращаем массив id
+// }
 
 loadTodos([1, 2, 3]).then((result) => console.log(result)); // [1, 2, 3] или [1, null, 3]
