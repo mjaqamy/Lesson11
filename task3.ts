@@ -26,6 +26,8 @@ async function loadTodos(nums: number[]): Promise<(number | null)[]> {
     const todo = await loadTodo(id); // ждём результат каждого запроса
     ids.push(todo ? todo.id : null); // если объект есть, берём id, иначе null
   }
+  return null; // если запрос не удался
+}
 
   return ids;
 }
